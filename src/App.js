@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from 'react';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import MainContainer from './containers/MainContainer/MainContainer';
+import Layout from './hoc/Layout/Layout';
+import ContactData from './containers/ContactData/ContactData';
 
-export default App;
+const LazyComponent = React.lazy(() => {
+	return import('./components/LazyComponent/LazyComponent');
+});
+
+const App = () => {
+	const routes = (
+		<Switch>
+			<Route path='/contact' component={ContactData} />
+			<Route path='/lazy' render={() => <LazyComponent />} />
+			<Route path='/' exact component={MainContainer} />
+			<Redirect to='/' />
+		</Switch>
+	);
+
+	return (
+		<div className='App'>
+			<Layout>
+				<Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
+			</Layout>
+		</div>
+	);
+};
+
+export default withRouter(App);
