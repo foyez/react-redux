@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 
 import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions';
 
 import Button from '../../components/UI/Button/Button';
 import Modal from '../../components/UI/Modal/Modal';
@@ -53,7 +54,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onIncrementCounter: () => dispatch({ type: 'INCREMENT' }),
   onAddCounter: () => dispatch({ type: 'ADD', payload: 5 }),
-  onStoreCounter: (counter) => dispatch({ type: 'STORE_COUNTER', payload: counter }),
+  onStoreCounter: (counter) => dispatch(actionCreators.storeCounter(counter)),
   onDeleteCounter: (id) => dispatch({ type: 'DELETE_COUNTER', id })
 });
 

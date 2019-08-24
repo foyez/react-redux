@@ -18,9 +18,11 @@ const counterReducer = (state = initialState, action = {}) => {
         counter: state.counter + action.payload
       };
     case STORE_COUNTER:
+      const updatedCounter = action.payload * 2;
+
       return {
         ...state,
-        storeCounter: [...state.storeCounter, { id: new Date(), value: action.payload }]
+        storeCounter: [...state.storeCounter, { id: new Date(), value: updatedCounter }]
       }
     case DELETE_COUNTER:
       return {

@@ -1,0 +1,3 @@
+export {
+  storeCounter
+} from './counter';
