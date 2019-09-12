@@ -1,51 +1,48 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObj } from '../../shared/utility';
-import { authStart } from '../actions/auth';
 
 const initialState = {
 	token: null,
-	userId: null,
-	error: null,
-	loading: null
+	isAuthenticated: false,
+	isLoading: false,
+	user: null
 };
 
-const authStart = (state, action) =>
-	updateObj(state, {
-		error: null,
-		loading: true
-	});
-
-const authSuccess = (state, action) =>
-	updateObj(state, {
-		token: action.token,
-		userId: action.userId,
-		error: null,
-		loading: false
-	});
-
-const authFail = (state, action) =>
-	updateObj(state, {
-		error: action.error,
-		userId: null
-	});
-
-const authLogout = (state, action) =>
-	updateObj(state, {
-		token: null,
-		userId: null
-	});
-
-const reducer = (state = initialState, action = {}) => {
+const authReducer = (state = initialState, action = {}) => {
 	switch (action.type) {
-		case actionTypes.AUTH_START:
-			return authStart(state, action);
+		case actionTypes.AUTH_LOADING:
+			return updateObj(state, {
+				isLoading: true
+			})
 		case actionTypes.AUTH_SUCCESS:
-			return authSuccess(state, action);
-		case actionTypes.AUTH_LOGOUT:
-			return authLogout(state, action);
+			return updateObj(state, {
+				isAuthenticated: true,
+				isLoading: false,
+				token: action.token,
+				user: action.user
+			})
+		case actionTypes.LOGIN_SUCCESS:
+
+			return {
+				...state,
+				token: action.token,
+				user: action.user,
+				isAuthenticated: true,
+				isLoading: false
+			}
+		case actionTypes.AUTH_FAIL:
+		case actionTypes.LOGIN_FAIL:
+		case actionTypes.LOGOUT_SUCCESS:
+			localStorage.removeItem('token');
+			return updateObj(state, {
+				token: null,
+				isAuthenticated: false,
+				user: null,
+				isLoading: false
+			})
 		default:
 			return state;
 	}
-};
+}
 
-export default reducer;
+export default authReducer;

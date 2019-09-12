@@ -1,4 +1,4 @@
-.ContactData {
+.Login {
   margin: 2rem auto;
   width: 80%;
   text-align: center;
@@ -7,8 +7,8 @@
   padding: 1rem;
 }
 
-@media only screen and (min-width: 600px) {
-  .ContactData {
-    width: 500px;
+@media (min-width: 600px) {
+  .Login {
+    width: 50rem;
   }
 }

@@ -5,7 +5,14 @@ export const updateObj = (oldObj, updatedProperties) => {
 	};
 };
 
-export const checkValidity = (value, rules) => {
+export const sanitize = s => {
+	return s
+		.replace("&", "&amp;")
+		.replace("<", "&lt;")
+		.replace(">", "&gt;");
+};
+
+export const checkValidity = ({ value, ...helper }, rules) => {
 	let isValid = true;
 
 	if (!rules) {
@@ -32,6 +39,16 @@ export const checkValidity = (value, rules) => {
 	if (rules.isNumeric) {
 		const pattern = /^\d+$/;
 		isValid = pattern.test(value) && isValid;
+	}
+
+	if (rules.isPassword) {
+		isValid = value.length >= 6 && isValid;
+
+		// TODO - need to add password rules
+	}
+
+	if (rules.isPassword2) {
+		isValid = value === helper.password && isValid
 	}
 
 	return isValid;
