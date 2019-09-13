@@ -16,23 +16,25 @@ const authReducer = (state = initialState, action = {}) => {
 		// 		isLoading: true
 		// 	})
 		case actionTypes.AUTH_SUCCESS:
+		case actionTypes.LOGIN_SUCCESS:
+		case actionTypes.REGISTER_SUCCESS:
 			return updateObj(state, {
 				isAuthenticated: true,
 				isLoading: false,
 				token: action.token,
 				user: action.user
 			})
-		case actionTypes.LOGIN_SUCCESS:
-
-			return {
-				...state,
-				token: action.token,
-				user: action.user,
-				isAuthenticated: true,
-				isLoading: false
-			}
+		// case actionTypes.LOGIN_SUCCESS:
+		// 	return {
+		// 		...state,
+		// 		token: action.token,
+		// 		user: action.user,
+		// 		isAuthenticated: true,
+		// 		isLoading: false
+		// 	}
 		case actionTypes.AUTH_FAIL:
 		case actionTypes.LOGIN_FAIL:
+		case actionTypes.REGISTER_FAIL:
 		case actionTypes.LOGOUT_SUCCESS:
 			localStorage.removeItem('token');
 			return updateObj(state, {

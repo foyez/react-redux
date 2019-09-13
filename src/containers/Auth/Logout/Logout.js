@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import { logout } from '../../../store/actions';
+import store from '../../../store/store';
 
-const Logout = props => {
+const Logout = () => {
   useEffect(() => {
-    props.logout();
+    store.dispatch(logout());
   }, []);
 
-  return <Redirect to='/' />
-}
+  return <Redirect to='/' />;
+};
 
-export default connect(null, { logout })(Logout);
+export default Logout;

@@ -4,5 +4,6 @@ export {
 export {
   loadUser,
   login,
+  register,
   logout
 } from './auth';

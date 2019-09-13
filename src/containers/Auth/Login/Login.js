@@ -123,7 +123,11 @@ const Login = (props) => {
           clicked={ e => handleSubmit(e) }
         >Login</Button>
         <p>
-          Don't have an account? <Link to='/register'>Register</Link>
+          {/* Don't have an account? <Link to='/register'>Register</Link> */ }
+          Don't have an account? <Link to={ {
+            pathname: '/register',
+            state: { from }
+          } }>Register</Link>
         </p>
       </form>
     </div>

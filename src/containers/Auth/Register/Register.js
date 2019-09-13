@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -7,8 +7,9 @@ import classes from './Register.module.css';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import { checkValidity, updateObj } from '../../../shared/utility';
+import { register } from '../../../store/actions';
 
-const Register = () => {
+const Register = (props) => {
   const [controls, setControls] = useState({
     name: {
       elType: 'input',
@@ -66,6 +67,7 @@ const Register = () => {
       touched: false
     }
   })
+  const { from } = props.location.state || { from: { pathname: '/' } };
 
   const handleInputChange = (e, controlName) => {
     // const updatedControlName = updateObj(controls[controlName], {
@@ -100,6 +102,13 @@ const Register = () => {
     }
 
     console.log(registerData)
+    const newUser = {
+      name: registerData.name,
+      email: registerData.email,
+      password: registerData.password
+    }
+
+    props.register(newUser);
   }
 
   const formElArr = [];
@@ -123,6 +132,11 @@ const Register = () => {
     />
   ))
 
+  if (props.isAuthenticated) {
+    console.log('register');
+    return <Redirect to={ from } />;
+  }
+
   return (
     <div className={ classes.Register }>
       <form>
@@ -139,4 +153,8 @@ const Register = () => {
   )
 }
 
-export default connect()(Register);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register })(Register);

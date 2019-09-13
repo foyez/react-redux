@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
-import { connect } from 'react-redux';
 import store from './store/store';
 import { loadUser } from './store/actions';
 
@@ -18,7 +17,7 @@ import LazyComponent from './components/LazyComponent/LazyComponent';
 // 	return import('./components/LazyComponent/LazyComponent');
 // });
 
-const App = (props) => {
+const App = () => {
 	useEffect(() => {
 		store.dispatch(loadUser());
 	}, []);
@@ -27,7 +26,7 @@ const App = (props) => {
 		<Switch>
 			<Route path='/login' component={ Login } />
 			<Route path='/register' component={ Register } />
-			<PrivateRoute path='logout' component={ Logout } />
+			<PrivateRoute path='/logout' component={ Logout } />
 			<Route path='/contact' component={ ContactData } />
 			<PrivateRoute path='/lazy' component={ LazyComponent } />
 			<Route path='/' exact component={ MainContainer } />
@@ -44,8 +43,4 @@ const App = (props) => {
 	);
 };
 
-const mapStateToProps = state => ({
-	auth: state.auth
-})
-
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(App);

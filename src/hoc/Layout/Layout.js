@@ -16,7 +16,7 @@ const Layout = (props) => {
 		setSideDrawerIsVisible(!sideDrawerIsVisible);
 	}
 
-	return (
+	const layout = (
 		<Fragment>
 			<Toolbar
 				auth={ props.auth }
@@ -29,6 +29,8 @@ const Layout = (props) => {
 			<main className={ classes.Content }>{ props.children }</main>
 		</Fragment>
 	);
+
+	return !props.auth.isLoading && layout;
 };
 
 const mapStateToProps = state => ({
