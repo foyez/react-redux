@@ -5,35 +5,35 @@ import * as actionTypes from './actionTypes';
 // CHECK TOKEN & LOAD USER
 export const loadUser = () => (dispatch, getState) => {
 	// Auth Loading
-	dispatch({ type: actionTypes.AUTH_LOADING })
+	// dispatch({ type: actionTypes.AUTH_LOADING })
 
 	// Get token from store
 	// const token = getState().auth.token;
 	const token = localStorage.getItem('token');
+	// Headers
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+			// 'Authorization': `Token ${token}`
+		}
+	}
 
 	if (token) {
-		// Headers
-		const config = {
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Token ${token}`
-			}
-		}
-
-		axios.get('/api/auth/user', config)
-			.then(res => {
-				console.log(res.data)
-				dispatch({
-					type: actionTypes.AUTH_SUCCESS,
-					token,
-					user: res.data
-				})
-			})
-			.catch(err => {
-				dispatch({ type: actionTypes.AUTH_FAIL })
-				console.log(err.response.data, err.response.status)
-			})
+		config.headers['Authorization'] = `Token ${token}`
 	}
+	axios.get('/api/auth/user', config)
+		.then(res => {
+			console.log(res.data)
+			dispatch({
+				type: actionTypes.AUTH_SUCCESS,
+				token,
+				user: res.data
+			})
+		})
+		.catch(err => {
+			dispatch({ type: actionTypes.AUTH_FAIL })
+			console.log(err.response.data, err.response.status)
+		})
 }
 
 // LOGIN USER
@@ -69,9 +69,8 @@ export const login = (email, password) => dispatch => {
 }
 
 // LOGOUT
-export const logout = () => (dispatch, getState) => {
+export const logout = () => dispatch => {
 	// Get token from store
-	// const token = getState().auth.token;
 	const token = localStorage.getItem('token');
 
 	if (token) {

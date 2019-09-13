@@ -4,16 +4,17 @@ import { updateObj } from '../../shared/utility';
 const initialState = {
 	token: null,
 	isAuthenticated: false,
-	isLoading: false,
+	// isLoading: false,
+	isLoading: true,
 	user: null
 };
 
 const authReducer = (state = initialState, action = {}) => {
 	switch (action.type) {
-		case actionTypes.AUTH_LOADING:
-			return updateObj(state, {
-				isLoading: true
-			})
+		// case actionTypes.AUTH_LOADING:
+		// 	return updateObj(state, {
+		// 		isLoading: true
+		// 	})
 		case actionTypes.AUTH_SUCCESS:
 			return updateObj(state, {
 				isAuthenticated: true,

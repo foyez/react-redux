@@ -52,6 +52,7 @@ const Login = (props) => {
       touched: false
     }
   })
+  const { from } = props.location.state || { from: { pathname: '/' } };
 
   const handleInputChange = (e, controlName) => {
     // const updatedControlName = updateObj(controls[controlName], {
@@ -110,7 +111,7 @@ const Login = (props) => {
   ))
 
   if (props.isAuthenticated) {
-    return <Redirect to='/' />;
+    return <Redirect to={ from } />;
   }
 
   return (

@@ -10,7 +10,8 @@ const NavigationItems = (props) => {
       <span>{ user ? `Welcome ${user.name}` : '' }</span>
       <NavigationItem link='/' exact>Home</NavigationItem>
       <NavigationItem link='/contact'>Contact</NavigationItem>
-      <NavigationItem link='/login'>Logout</NavigationItem>
+      <NavigationItem link='/lazy'>Lazy</NavigationItem>
+      <NavigationItem link='/logout'>Logout</NavigationItem>
     </ul>
   );
   const guestLinks = (

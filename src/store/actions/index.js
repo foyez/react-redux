@@ -1,4 +1,8 @@
 export {
   storeCounter
 } from './counter';
-export { loadUser, login } from './auth';
+export {
+  loadUser,
+  login,
+  logout
+} from './auth';
