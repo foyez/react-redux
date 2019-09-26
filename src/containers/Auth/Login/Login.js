@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
@@ -132,6 +133,11 @@ const Login = (props) => {
       </form>
     </div>
   )
+}
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 }
 
 const mapStateToProps = state => ({

@@ -18,6 +18,7 @@ const NavigationItems = (props) => {
     <ul className={ classes.NavigationItems }>
       <NavigationItem link='/' exact>Home</NavigationItem>
       <NavigationItem link='/contact'>Contact</NavigationItem>
+      <NavigationItem link='/redux-form'>Redux Form</NavigationItem>
       <NavigationItem link='/login'>Login</NavigationItem>
     </ul>
   );
