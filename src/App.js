@@ -7,7 +7,8 @@ import { loadUser } from './store/actions';
 import MainContainer from './containers/MainContainer/MainContainer';
 import Layout from './hoc/Layout/Layout';
 import ContactData from './containers/ContactData/ContactData';
-import ReduxForm from './containers/ReduxForm/ReduxForm';
+// import ReduxForm from './containers/ReduxForm/ReduxForm';
+import FinalForm from './containers/FinalForm/FinalForm';
 import PrivateRoute from './shared/PrivateRoute';
 import Login from './containers/Auth/Login/Login';
 import Register from './containers/Auth/Register/Register';
@@ -29,7 +30,8 @@ const App = () => {
 			<Route path='/register' component={ Register } />
 			<PrivateRoute path='/logout' component={ Logout } />
 			<Route path='/contact' component={ ContactData } />
-			<Route path='/redux-form' component={ ReduxForm } />
+			{/* <Route path='/redux-form' component={ ReduxForm } /> */ }
+			<Route path='/final-form' component={ FinalForm } />
 			<PrivateRoute path='/lazy' component={ LazyComponent } />
 			<Route path='/' exact component={ MainContainer } />
 			<Redirect to='/' />
