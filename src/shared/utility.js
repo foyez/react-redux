@@ -12,7 +12,7 @@ export const sanitize = s => {
 		.replace(">", "&gt;");
 };
 
-export const checkValidity = ({ value, ...helper }, rules) => {
+export const checkValidity = ({ value, ...rest }, rules) => {
 	let isValid = true;
 
 	if (!rules) {
@@ -45,10 +45,36 @@ export const checkValidity = ({ value, ...helper }, rules) => {
 		isValid = value.length >= 6 && isValid;
 
 		// TODO - need to add password rules
+		// At least 1 uppercase character.
+		// At least 1 lowercase character.
+		// At least 1 digit.
+		// At least 1 special character.
+		// Minimum 6 characters.
+		const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(\W|_)).{6,}$/;
+		isValid = pattern.test(value) && isValid;
 	}
 
 	if (rules.isPassword2) {
-		isValid = value === helper.password && isValid
+		isValid = value === rest.password && isValid
+	}
+
+	if (rules.phone) {
+		const onlyNums = value.replace(/[^\d]/g, '')
+		if (onlyNums.length <= 3) {
+			return onlyNums
+		}
+		if (onlyNums.length <= 7) {
+			return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`
+		}
+		return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(
+			6,
+			10
+		)}`
+	}
+
+	if (rules.url) {
+		// const pattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+		// isValid = pattern.test(value) && isValid;
 	}
 
 	return isValid;

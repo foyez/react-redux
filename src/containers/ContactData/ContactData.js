@@ -7,7 +7,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObj, checkValidity } from '../../shared/utility';
 
 const ContactData = (props) => {
-	const [contactForm, setContactForm] = useState({
+	const [controls, setControls] = useState({
 		name: {
 			elType: 'input',
 			elConfig: {
@@ -89,52 +89,43 @@ const ContactData = (props) => {
 			valid: true
 		}
 	});
-
 	const [formIsValid, setFormIsValid] = useState(false);
+
+	const handleInputChanged = (e, controlName) => {
+		const properties = { value: e.target.value };
+		const rules = controls[controlName].validation;
+
+		const updatedControls = updateObj(controls, {
+			[controlName]: updateObj(controls[controlName], {
+				value: e.target.value,
+				valid: checkValidity(properties, rules),
+				touched: true
+			})
+		})
+		setControls(updatedControls);
+
+		let formIsValid = true;
+		for (let controlName in updatedControls) {
+			formIsValid = updatedControls[controlName].valid && formIsValid;
+		}
+		setFormIsValid(formIsValid);
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const formData = {};
-		for (let formElIdentifier in contactForm) {
-			formData[formElIdentifier] = contactForm[formElIdentifier].value.trim();
+		const contactData = {};
+		for (let key in controls) {
+			contactData[key] = controls[key].value;
 		}
-
-		const order = {
-			orderData: formData,
-			userId: props.userId
-		};
-
-		console.log(order);
-	};
-
-	const handleInputChanged = (e, inputIdentifier) => {
-		const updatedFormEl = updateObj(contactForm[inputIdentifier], {
-			value: e.target.value,
-			valid: checkValidity(
-				e.target.value,
-				contactForm[inputIdentifier].validation
-			),
-			touched: true
-		});
-		const updatedOrderForm = updateObj(contactForm, {
-			[inputIdentifier]: updatedFormEl
-		});
-
-		let formIsValid = true;
-		for (let inputIdentifier in updatedOrderForm) {
-			formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-		}
-
-		setContactForm(updatedOrderForm);
-		setFormIsValid(formIsValid);
+		console.log(contactData);
 	};
 
 	const formElArr = [];
-	for (let key in contactForm) {
+	for (let key in controls) {
 		formElArr.push({
 			id: key,
-			config: contactForm[key]
+			config: controls[key]
 		});
 	}
 

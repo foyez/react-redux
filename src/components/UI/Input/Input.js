@@ -4,7 +4,7 @@ import classes from './Input.module.css';
 
 const Input = (props) => {
 	let inputEl = null;
-	const inputClasses = [ classes.InputEl ];
+	const inputClasses = [classes.InputEl];
 
 	if (props.invalid && props.shouldValidate && props.touched) {
 		inputClasses.push(classes.Invalid);
@@ -14,52 +14,53 @@ const Input = (props) => {
 		case 'input':
 			inputEl = (
 				<input
-					className={inputClasses.join(' ')}
-					{...props.elConfig}
-					value={props.value}
-					onChange={props.changed}
+					className={ inputClasses.join(' ') }
+					{ ...props.elConfig }
+					value={ props.value }
+					onChange={ props.changed }
 				/>
 			);
 			break;
 		case 'textarea':
 			inputEl = (
 				<textarea
-					className={inputClasses.join(' ')}
-					{...props.elConfig}
-					value={props.value}
-					onChange={props.changed}
+					className={ inputClasses.join(' ') }
+					{ ...props.elConfig }
+					value={ props.value }
+					onChange={ props.changed }
 				/>
 			);
 			break;
 		case 'select':
 			inputEl = (
 				<select
-					className={inputClasses.join(' ')}
-					value={props.value}
-					onChange={props.changed}>
-					{props.elConfig.options.map((option) => (
-						<option key={option.value} value={option.value}>
-							{option.displayValue}
+					className={ inputClasses.join(' ') }
+					value={ props.value }
+					onChange={ props.changed }>
+					{ props.elConfig.options.map((option) => (
+						<option key={ option.value } value={ option.value }>
+							{ option.displayValue }
 						</option>
-					))}
+					)) }
 				</select>
 			);
 			break;
 		default:
 			inputEl = (
 				<input
-					className={inputClasses.join(' ')}
-					{...props.elConfig}
-					value={props.value}
-					onChange={props.changed}
+					className={ inputClasses.join(' ') }
+					{ ...props.elConfig }
+					value={ props.value }
+					onChange={ props.changed }
 				/>
 			);
 	}
 
 	return (
-		<div className={classes.Input}>
-			<label className={classes.Label}>{props.label}</label>
-			{inputEl}
+		<div className={ classes.Input }>
+			<label className={ classes.Label }>{ props.label }</label>
+			{ inputEl }
+			{/* { touched && error && <span>{ error }</span> } */ }
 		</div>
 	);
 };

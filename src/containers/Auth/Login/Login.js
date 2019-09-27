@@ -26,19 +26,6 @@ const Login = (props) => {
       valid: false,
       touched: false
     },
-    // username: {
-    //   elType: 'input',
-    //   elConfig: {
-    //     type: 'text',
-    //     placeholder: 'Username'
-    //   },
-    //   value: '',
-    //   validation: {
-    //     required: true
-    //   },
-    //   valid: false,
-    //   touched: false
-    // },
     password: {
       elType: 'input',
       elConfig: {
