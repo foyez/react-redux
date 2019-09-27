@@ -18,8 +18,7 @@ const ContactData = (props) => {
 			validation: {
 				required: true
 			},
-			valid: false,
-			touched: false
+			error: undefined
 		},
 		street: {
 			elType: 'input',
@@ -31,8 +30,7 @@ const ContactData = (props) => {
 			validation: {
 				required: true
 			},
-			valid: false,
-			touched: false
+			error: undefined,
 		},
 		zipCode: {
 			elType: 'input',
@@ -43,11 +41,11 @@ const ContactData = (props) => {
 			value: '',
 			validation: {
 				required: true,
+				isNumeric: true,
 				minLength: 4,
 				maxLength: 5
 			},
-			valid: false,
-			touched: false
+			error: undefined,
 		},
 		country: {
 			elType: 'input',
@@ -59,8 +57,7 @@ const ContactData = (props) => {
 			validation: {
 				required: true
 			},
-			valid: false,
-			touched: false
+			error: undefined,
 		},
 		email: {
 			elType: 'input',
@@ -73,8 +70,7 @@ const ContactData = (props) => {
 				required: true,
 				isEmail: true
 			},
-			valid: false,
-			touched: false
+			error: undefined,
 		},
 		deliveryMethod: {
 			elType: 'select',
@@ -86,7 +82,7 @@ const ContactData = (props) => {
 			},
 			value: 'fastest',
 			validation: {},
-			valid: true
+			error: undefined
 		}
 	});
 	const [formIsValid, setFormIsValid] = useState(false);
@@ -94,19 +90,20 @@ const ContactData = (props) => {
 	const handleInputChanged = (e, controlName) => {
 		const properties = { value: e.target.value };
 		const rules = controls[controlName].validation;
+		const { error, value } = checkValidity(properties, rules);
 
 		const updatedControls = updateObj(controls, {
 			[controlName]: updateObj(controls[controlName], {
-				value: e.target.value,
-				valid: checkValidity(properties, rules),
-				touched: true
+				value,
+				error
 			})
 		})
 		setControls(updatedControls);
 
 		let formIsValid = true;
 		for (let controlName in updatedControls) {
-			formIsValid = updatedControls[controlName].valid && formIsValid;
+			const err = updatedControls[controlName].error;
+			formIsValid = err !== undefined && formIsValid;
 		}
 		setFormIsValid(formIsValid);
 	};
@@ -137,9 +134,7 @@ const ContactData = (props) => {
 					elType={ formEl.config.elType }
 					elConfig={ formEl.config.elConfig }
 					value={ formEl.config.value }
-					invalid={ !formEl.config.valid }
-					shouldValidate={ formEl.config.validation }
-					touched={ formEl.config.touched }
+					error={ formEl.config.error }
 					changed={ (e) => handleInputChanged(e, formEl.id) }
 				/>
 			)) }

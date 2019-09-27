@@ -6,7 +6,7 @@ const Input = (props) => {
 	let inputEl = null;
 	const inputClasses = [classes.InputEl];
 
-	if (props.invalid && props.shouldValidate && props.touched) {
+	if (props.error) {
 		inputClasses.push(classes.Invalid);
 	}
 
@@ -18,6 +18,7 @@ const Input = (props) => {
 					{ ...props.elConfig }
 					value={ props.value }
 					onChange={ props.changed }
+					onBlur={ props.changed }
 				/>
 			);
 			break;
@@ -28,6 +29,7 @@ const Input = (props) => {
 					{ ...props.elConfig }
 					value={ props.value }
 					onChange={ props.changed }
+					onBlur={ props.changed }
 				/>
 			);
 			break;
@@ -52,6 +54,7 @@ const Input = (props) => {
 					{ ...props.elConfig }
 					value={ props.value }
 					onChange={ props.changed }
+					onBlur={ props.changed }
 				/>
 			);
 	}
@@ -60,7 +63,7 @@ const Input = (props) => {
 		<div className={ classes.Input }>
 			<label className={ classes.Label }>{ props.label }</label>
 			{ inputEl }
-			{/* { touched && error && <span>{ error }</span> } */ }
+			{ props.error && <span>{ props.error }</span> }
 		</div>
 	);
 };

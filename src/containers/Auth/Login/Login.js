@@ -23,8 +23,7 @@ const Login = (props) => {
         required: true,
         isEmail: true
       },
-      valid: false,
-      touched: false
+      error: undefined
     },
     password: {
       elType: 'input',
@@ -36,8 +35,7 @@ const Login = (props) => {
       validation: {
         required: true
       },
-      valid: false,
-      touched: false
+      error: undefined
     }
   })
   const { from } = props.location.state || { from: { pathname: '/' } };
@@ -54,14 +52,14 @@ const Login = (props) => {
 
     const properties = { value: e.target.value };
     const rules = controls[controlName].validation;
+    const { error, value } = checkValidity(properties, rules);
 
     const updatedControls = updateObj(controls, {
       [controlName]: updateObj(controls[controlName], {
-        value: e.target.value,
-        valid: checkValidity(properties, rules),
-        touched: true
+        value,
+        error
       })
-    })
+    });
     setControls(updatedControls);
   }
 
@@ -91,9 +89,7 @@ const Login = (props) => {
       elType={ formEl.config.elType }
       elConfig={ formEl.config.elConfig }
       value={ formEl.config.value }
-      invalid={ !formEl.config.valid }
-      shouldValidate={ formEl.config.validation }
-      touched={ formEl.config.touched }
+      error={ formEl.config.error }
       changed={ e => handleInputChange(e, formEl.id) }
     />
   ))

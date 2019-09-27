@@ -21,8 +21,7 @@ const Register = (props) => {
       validation: {
         required: true
       },
-      valid: false,
-      touched: false
+      error: undefined
     },
     email: {
       elType: 'input',
@@ -35,8 +34,7 @@ const Register = (props) => {
         required: true,
         isEmail: true
       },
-      valid: false,
-      touched: false
+      error: undefined
     },
     password: {
       elType: 'input',
@@ -49,8 +47,7 @@ const Register = (props) => {
         required: true,
         isPassword: true
       },
-      valid: false,
-      touched: false
+      error: undefined
     },
     password2: {
       elType: 'input',
@@ -63,8 +60,7 @@ const Register = (props) => {
         required: true,
         isPassword2: true
       },
-      valid: false,
-      touched: false
+      error: undefined
     }
   })
   const { from } = props.location.state || { from: { pathname: '/' } };
@@ -82,12 +78,12 @@ const Register = (props) => {
     const properties = { value: e.target.value };
     controlName === 'password2' && (properties.password = controls['password'].value);
     const rules = controls[controlName].validation;
+    const { error, value } = checkValidity(properties, rules);
 
     const updatedControls = updateObj(controls, {
       [controlName]: updateObj(controls[controlName], {
-        value: e.target.value,
-        valid: checkValidity(properties, rules),
-        touched: true
+        value,
+        error
       })
     })
     setControls(updatedControls);
@@ -125,9 +121,7 @@ const Register = (props) => {
       elType={ formEl.config.elType }
       elConfig={ formEl.config.elConfig }
       value={ formEl.config.value }
-      invalid={ !formEl.config.valid }
-      shouldValidate={ formEl.config.validation }
-      touched={ formEl.config.touched }
+      error={ formEl.config.error }
       changed={ e => handleInputChange(e, formEl.id) }
     />
   ))
